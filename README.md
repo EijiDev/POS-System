@@ -1,59 +1,236 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# ☕ BrewPOS — Coffee Shop Point of Sale System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A full-featured POS system built with **Laravel 12** for coffee shops. Includes sales, inventory, expenses, customer loyalty, and analytics.
 
-## About Laravel
+---
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Requirements
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Before you start, make sure you have the following installed:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+| Tool | Version | Download |
+|------|---------|----------|
+| XAMPP | 8.2+ | https://www.apachefriends.org |
+| PHP | 8.2+ | Included with XAMPP |
+| MySQL | 8.0+ | Included with XAMPP |
+| Composer | Latest | https://getcomposer.org |
+| Git | Latest | https://git-scm.com |
 
-## Learning Laravel
+> **Note:** XAMPP already includes PHP and MySQL. Just make sure to use PHP 8.2 or higher.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+---
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Setup Instructions
 
-## Laravel Sponsors
+### 1. Start XAMPP
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Open **XAMPP Control Panel** and start both:
+- ✅ Apache
+- ✅ MySQL
 
-### Premium Partners
+---
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Clone the Project
 
-## Contributing
+Open your terminal or command prompt and navigate to the XAMPP `htdocs` folder:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```bash
+cd C:\xampp\htdocs
+```
 
-## Code of Conduct
+Clone the repository:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+git clone https://github.com/your-username/POS-System.git
+cd POS-System
+```
 
-## Security Vulnerabilities
+> Replace `your-username` with the actual GitHub username.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+### 3. Install PHP Dependencies
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+composer install
+```
+
+---
+
+### 4. Set Up Environment File
+
+Copy the example environment file:
+
+```bash
+copy .env.example .env
+```
+
+Then generate the application key:
+
+```bash
+php artisan key:generate
+```
+
+---
+
+### 5. Configure the Database
+
+Open **phpMyAdmin** in your browser:
+```
+http://localhost/phpmyadmin
+```
+
+Create a new database:
+- Click **New**
+- Database name: `pos_system`
+- Collation: `utf8mb4_unicode_ci`
+- Click **Create**
+
+Now open `.env` in a text editor and update the database settings:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=pos_system
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+> If your MySQL has a password, enter it in `DB_PASSWORD`.
+
+---
+
+### 6. Run Migrations & Seed Demo Data
+
+This will create all the tables and populate them with realistic demo data:
+
+```bash
+php artisan migrate --seed
+```
+
+This seeds:
+- ✅ Admin user account
+- ✅ 14 products across 4 categories (Coffee, Non-Coffee, Pastry, Snacks)
+- ✅ ~2,000 orders spread over 60 days with realistic patterns
+- ✅ 8 loyalty customers across Bronze / Silver / Gold tiers
+- ✅ 3 months of expenses (Rent, Staff, Utilities, Stock, Maintenance)
+
+---
+
+### 7. Create Storage Symlink
+
+This is required for product image uploads to work:
+
+```bash
+php artisan storage:link
+```
+
+---
+
+### 8. Run the Application
+
+```bash
+php artisan serve
+```
+
+Open your browser and go to:
+```
+http://localhost:8000
+```
+
+---
+
+## Login Credentials
+
+| Field    | Value                  |
+|----------|------------------------|
+| Email    | admin@brewpos.com      |
+| Password | admin123               |
+
+---
+
+## Features
+
+| Page | Description |
+|------|-------------|
+| 🏠 Dashboard | Live stats, sales chart, top products, recent transactions |
+| 🧾 Point of Sale | Product browser, order management, cash payment with change calculator |
+| 📦 Products | Full product catalog with CRUD, image upload, stock tracking |
+| 💸 Expenses | Track business costs by category with monthly summaries |
+| 👥 Customers | Loyalty program — points, tiers (Bronze/Silver/Gold), visit tracking |
+| 📊 Reports | Revenue analytics, popular items, category breakdown, Excel export |
+
+---
+
+## Resetting Demo Data
+
+To wipe all data and re-seed fresh demo data at any time:
+
+```bash
+php artisan migrate:fresh --seed
+```
+
+---
+
+## Troubleshooting
+
+**`php` is not recognized**
+> Add PHP to your system PATH. In XAMPP, PHP is at `C:\xampp\php`. Add this to your Environment Variables → System Variables → Path.
+
+**`composer` is not recognized**
+> Download and install Composer from https://getcomposer.org/download/ and restart your terminal.
+
+**Database connection error**
+> Make sure MySQL is running in XAMPP Control Panel and your `.env` DB credentials are correct.
+
+**Page shows 404 after setup**
+> Make sure Apache's `mod_rewrite` is enabled. In XAMPP, open `httpd.conf` and ensure `AllowOverride All` is set for your htdocs directory.
+
+**Images not showing**
+> Run `php artisan storage:link` if you haven't already.
+
+---
+
+## Tech Stack
+
+- **Backend:** Laravel 12 (PHP 8.2)
+- **Database:** MySQL 8
+- **Frontend:** Vanilla JS, Chart.js
+- **Excel Export:** Maatwebsite/Laravel-Excel
+- **Fonts:** Plus Jakarta Sans (Google Fonts)
+- **Server:** XAMPP (Apache + MySQL)
+
+---
+
+## Project Structure
+
+```
+POS-System/
+├── app/
+│   ├── Controllers/        # Auth, Dashboard, POS, Products, Expenses, Customers, Reports
+│   ├── Exports/            # Excel export sheets (Summary, Orders, Popular Items, etc.)
+│   └── Models/             # Order, OrderItem, Product, Expense, Customer
+├── database/
+│   ├── migrations/         # All table schemas
+│   └── seeders/            # DatabaseSeeder with realistic demo data
+├── public/
+│   ├── css/                # Page stylesheets
+│   └── js/                 # Page scripts
+├── resources/views/
+│   ├── layouts/            # app.blade.php base layout
+│   ├── partials/           # sidebar.blade.php (reusable)
+│   ├── auth/               # login.blade.php
+│   ├── dashboard/          # index + partials
+│   ├── pos/                # index + modals
+│   ├── product/            # index + modals
+│   ├── expenses/           # index
+│   ├── customers/          # index
+│   └── reports/            # index
+└── routes/
+    └── web.php             # All application routes
+```
+
+---
+
+*Built with ❤️ and ☕*
